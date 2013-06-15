@@ -1,0 +1,18 @@
+<inline id="Toolbar">
+    <toolbargroup>
+        <iconbutton icon="save"></iconbutton>
+        <iconbutton icon="load"></iconbutton>
+        <iconbutton icon="export"></iconbutton>
+    </toolbargroup>
+    <toolbargroup>
+        <iconbutton icon="element" onclick="@binding[createElement]"></iconbutton>
+        <iconbutton icon="image" onclick="@binding[createImage]"></iconbutton>
+        <iconbutton icon="text" onclick="@binding[createText]"></iconbutton>
+    </toolbargroup>
+
+    <toolbargroup>
+        <iconbutton icon="zoom-in" onclick="@binding[zoomIn]"></iconbutton>
+        <iconbutton icon="zoom-out" onclick="@binding[zoomOut]"></iconbutton>
+        <label text="@binding[viewportScale]" class="viewport-scale"></label>
+    </toolbargroup>
+</inline>

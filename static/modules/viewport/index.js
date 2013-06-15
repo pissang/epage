@@ -1,0 +1,117 @@
+define(function(require){
+
+    var qpf = require("qpf");
+    var ko = require("knockout");
+    var Module = require("../module");
+    var Viewport = require("./viewport");
+    var xml = require("text!./viewport.xml");
+    var _ = require("_");
+    var command = require("core/command");
+
+    var hierarchy = require("modules/hierarchy/index");
+
+    var viewport = new Module({
+        name : "viewport",
+        xml : xml,
+
+        viewportWidth : ko.observable(960),
+        viewportHeight : ko.observable(1000),
+
+        viewportScale : ko.observable(1)
+    });
+
+    // Control points of each direction
+    var resizeControls = {
+        // Top left
+        $tl : $('<div class="resize-control tl"></div>'),
+        // Top center
+        $tc : $('<div class="resize-control tc"></div>'),
+        // Top right
+        $tr : $('<div class="resize-control tr"></div>'),
+        // Left center
+        $lc : $('<div class="resize-control lc"></div>'),
+        // Right center
+        $rc : $('<div class="resize-control rc"></div>'),
+        // Bottom left
+        $bl : $('<div class="resize-control bl"></div>'),
+        // Bottom center
+        $bc : $('<div class="resize-control bc"></div>'),
+        // Bottom right
+        $br : $('<div class="resize-control br"></div>')
+    };
+
+    var $outline = $('<div class="element-select-outline"></div>');
+    $outline.append(resizeControls.$tl);
+    $outline.append(resizeControls.$tc);
+    $outline.append(resizeControls.$tr);
+    $outline.append(resizeControls.$lc);
+    $outline.append(resizeControls.$rc);
+    $outline.append(resizeControls.$bl);
+    $outline.append(resizeControls.$bc);
+    $outline.append(resizeControls.$br);
+
+    var _viewport;
+
+    viewport.on("start", function(){
+        _viewport = viewport.mainComponent.$el.find("#ViewportMain").qpf("get")[0];
+        initDragUpload();
+    })
+
+    hierarchy.on("create", function(element){
+        _viewport.addElement(element);
+    });
+
+    var selectedElements = [];
+
+    var draggable = new qpf.components.mixin.Draggable();
+    // Update the position property manually
+    draggable.on("drag", function(){
+        _.each(selectedElements, function(element){
+            element.syncPositionManually();
+        })
+    })
+
+    hierarchy.on("select", function(elements){
+        var lastElement = elements[elements.length-1];
+        if( ! lastElement){
+            return;
+        }
+        lastElement.$wrapper.append($outline);
+
+        draggable.clear();
+        _.each(elements, function(element){
+            draggable.add(element.$wrapper);
+        });
+
+        selectedElements = elements;
+    });
+
+    // Drag upload
+    var imageReader = new FileReader();
+    function initDragUpload(){
+        viewport.mainComponent.$el[0].addEventListener("dragover", function(e){
+            e.stopPropagation();
+            e.preventDefault();
+        });
+        viewport.mainComponent.$el[0].addEventListener("drop", function(e){
+            e.stopPropagation();
+            e.preventDefault();
+
+            var file = e.dataTransfer.files[0];
+            if(file && file.type.match(/image/)){
+                
+                imageReader.onload = function(e){
+                    imageReader.onload = null;
+                    command.execute("create", "image", {
+                        src : {
+                            value : e.target.result
+                        }
+                    })
+                }
+                imageReader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    return viewport;
+})

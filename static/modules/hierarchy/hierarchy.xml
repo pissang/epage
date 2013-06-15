@@ -1,0 +1,3 @@
+<container id="Hierarchy">
+    <list id="ElementsList" dataSource="@binding[elementsList]" itemView="@binding[ElementView]" onselect="@binding[selectElements]"></list>
+</container>
