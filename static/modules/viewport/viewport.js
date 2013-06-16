@@ -2,7 +2,7 @@ define(function(require){
 
     var qpf = require("qpf");
     var ko = require("knockout");
-    var Meta = qpf.use("components/meta/meta");
+    var Meta = qpf.use("meta/meta");
 
     var Viewport = Meta.derive(function(){
         return {

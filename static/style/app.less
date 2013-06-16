@@ -44,14 +44,6 @@ body{
         }
     }
 
-    .qpf-icon{
-        width:15px;
-        height:15px;
-        background-size: 15px 15px;
-        background-repeat: no-repeat;
-
-    }
-
     .qpf-ui-icon-button{
         width:30px;
         height:30px;
@@ -62,6 +54,7 @@ body{
             width:30px;
             height:30px;
             background-position: 50% 50%;
+            background-repeat: no-repeat;
         }
     }
 
@@ -102,6 +95,11 @@ body{
         }
     }
 
+    .qpf-ui-label{
+        color: #868686;
+        text-shadow: 0px 0px 3px #000;
+    }
+
     .qpf-panel-body{
         padding: 0px;
     }
@@ -113,7 +111,7 @@ body{
     box-shadow: 0px 0px 10px black;
 
     .qpf-ui-toolbar-group{
-        margin:0px 20px;
+        margin:0px 10px;
     }
 
     .qpf-ui-icon-button{
@@ -165,6 +163,27 @@ body{
     .viewport-scale{
         line-height: 40px;
         height:40px;
+    }
+
+    .viewport-size{
+        padding-left: 20px;
+        background-image: url(images/screen.svg);
+        background-size: 15px 15px;
+        background-repeat: no-repeat;
+        background-position: 0% 50%;
+        .qpf-ui-spinner{
+            margin:7px 3px;
+        }
+        input{
+            width:50px;
+        }
+    }
+
+    .divider{
+        width:0px;
+        height:40px;
+        border-left: 1px solid #444;
+        border-right: 1px solid #222;
     }
 }
 
@@ -309,12 +328,14 @@ body{
 
         border-top: 1px solid #444;
         border-bottom: 1px solid #000;
+        position: relative;
 
         .qpf-property-left{
-            float:left;
-            width:60px;
-
+            width: 60px;
             text-align: right;
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
         }
         .qpf-property-right{
             margin-left:70px;
@@ -347,4 +368,10 @@ body{
 
 #Palette{
     box-shadow: 0px 0px 20px black;
+
+    .qpf-panel-body{
+        padding:10px;
+    }
 }
+
+

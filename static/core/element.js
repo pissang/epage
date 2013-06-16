@@ -8,7 +8,7 @@ define(function(require){
 
     var command = require("./command");
 
-    var Draggable = qpf.components.mixin.Draggable;
+    var Draggable = qpf.mixin.Draggable;
 
     var Element = qpf.core.Clazz.derive(function(){
         
@@ -88,6 +88,39 @@ define(function(require){
                     precision : 0
                 },
 
+                background : {
+                    label : "背景",
+                    ui : "checkbox",
+                    field : "style",
+
+                    checked : ko.observable(false)
+                },
+
+                backgroundColor : {
+                    label : "背景色",
+                    ui : "color",
+                    field : "style",
+
+                    color : ko.observable(0xffffff)
+                },
+
+                backgroundImageType : {
+                    label : "背景图片",
+                    ui : "combobox",
+                    class : "small",
+                    field : "style",
+                    items : [{
+                        text : "无",
+                        value : "none"
+                    }, {
+                        text : "渐变",
+                        value : "gradient"
+                    }, {
+                        text : "图片文件",
+                        value : "file"
+                    }],
+                    value : ko.observable("none")
+                },
                 borderRadius : {
                     label : "圆角",
                     ui : "vector",
@@ -122,22 +155,6 @@ define(function(require){
                         min : 0
                     }],
                     constrainProportion : ko.observable(true)
-                },
-
-                background : {
-                    label : "背景",
-                    ui : "checkbox",
-                    field : "style",
-
-                    checked : ko.observable(false)
-                },
-
-                backgroundColor : {
-                    label : "背景色",
-                    ui : "color",
-                    field : "style",
-
-                    color : ko.observable(0xffffff)
                 }
                 // rotation : {
                 //     label : "旋转",
@@ -213,7 +230,7 @@ define(function(require){
                         'z-index' : self.properties.zIndex.value()
                     })
                 }
-            })
+            });
             // Border radius
             ko.computed({
                 read : function(){
@@ -247,6 +264,8 @@ define(function(require){
             this.$wrapper.css({
                 position : "absolute"
             });
+
+            this.$wrapper.addClass("epage-" + this.type.toLowerCase());
 
             this.onCreate(this.$wrapper);
 

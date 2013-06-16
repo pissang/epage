@@ -5,8 +5,8 @@
 define(function(require){
     
     var qpf = require("qpf");
-    var Meta = qpf.use("components/meta/meta");
-    var Base = qpf.use("components/base");
+    var Meta = qpf.use("meta/meta");
+    var Base = qpf.use("base");
     var ko = require("knockout");
     var _ = require("_")
 

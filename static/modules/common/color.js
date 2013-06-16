@@ -2,12 +2,12 @@ define(function(require){
 
     var qpf = require("qpf");
     var ko = require("knockout");
-    var Meta = qpf.components.meta.Meta;
+    var Meta = qpf.meta.Meta;
     var onecolor = require("onecolor");
 
-    var palette = new qpf.components.widget.Palette();
+    var palette = new qpf.widget.Palette();
     palette.width(370);
-    var popup = new qpf.components.container.Window();
+    var popup = new qpf.container.Window();
     popup.title("调色器");
     popup.id("Palette");
     popup.add(palette);

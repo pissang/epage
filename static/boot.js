@@ -53,6 +53,8 @@
                         "modules/common/modal",
                         "modules/common/region",
                         "modules/common/iconbutton",
+                        "modules/common/togglebutton",
+                        "modules/common/toggleiconbutton",
                         "modules/common/nativehtml",
                         "modules/common/color"]
             },

@@ -3,7 +3,7 @@ define(function(require){
     var qpf = require("qpf");
     var ko = require("knockout");
 
-    var Element = qpf.components.meta.Meta.derive(function(){
+    var Element = qpf.meta.Meta.derive(function(){
         return {
             id : ko.observable(""),
             target : ko.observable()

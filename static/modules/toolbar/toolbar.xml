@@ -4,15 +4,21 @@
         <iconbutton icon="load"></iconbutton>
         <iconbutton icon="export"></iconbutton>
     </toolbargroup>
+    <meta class="divider"></meta>
     <toolbargroup>
         <iconbutton icon="element" onclick="@binding[createElement]"></iconbutton>
         <iconbutton icon="image" onclick="@binding[createImage]"></iconbutton>
         <iconbutton icon="text" onclick="@binding[createText]"></iconbutton>
     </toolbargroup>
-
+    <meta class="divider"></meta>
     <toolbargroup>
         <iconbutton icon="zoom-in" onclick="@binding[zoomIn]"></iconbutton>
         <iconbutton icon="zoom-out" onclick="@binding[zoomOut]"></iconbutton>
         <label text="@binding[viewportScale]" class="viewport-scale"></label>
+    </toolbargroup>
+    <meta class="divider"></meta>
+    <toolbargroup class="viewport-size">
+        <spinner value="@binding[viewportWidth]" min="0" width="100"></spinner>
+        <spinner value="@binding[viewportHeight]" min="0" width="100"></spinner>
     </toolbargroup>
 </inline>

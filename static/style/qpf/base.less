@@ -27,13 +27,15 @@ body{
 	padding: 0px 20px;
 	cursor: pointer;
 
-	&:hover{
+	&:hover,
+	&.hover{
 		background-color: #757575;
 		border-top: 1px solid #848484;
 		color:#232323;
 	}
 
-	&:active{
+	&:active,
+	&.active{
 		.linear-gradient-top(#000000, rgba(255,255,255,0.0), 0%, rgba(255,255,255,0.1), 99%);
 		border-bottom: 1px solid #2b2b2b;
 		box-shadow: inset 0px 1px 3px black;

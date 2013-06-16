@@ -40,7 +40,10 @@ define(function(require){
 
         viewportScale : ko.computed(function(){
             return Math.floor(viewportModule.viewportScale() * 100) + "%";
-        })
+        }),
+
+        viewportWidth : viewportModule.viewportWidth,
+        viewportHeight : viewportModule.viewportHeight
     });
 
     var imageReader = new FileReader();

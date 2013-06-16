@@ -5,16 +5,16 @@ define(function(require){
     var _ = require("_");
 
 
-    var ButtonGroup = qpf.components.container.Inline.derive(function(){
+    var ButtonGroup = qpf.container.Inline.derive(function(){
         return {
-            
+            action : ko.observable("button"), // button | checkbox | radio
         }
     }, {
         type : "BUTTONGROUP",
         css : "button-group"
     });
 
-    qpf.components.container.Container.provideBinding("buttongroup", ButtonGroup);
+    qpf.Base.provideBinding("buttongroup", ButtonGroup);
 
     return ButtonGroup;
 })

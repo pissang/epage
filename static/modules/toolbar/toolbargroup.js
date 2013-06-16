@@ -5,14 +5,14 @@ define(function(require){
     var _ = require("_");
 
 
-    var ToolbarGroup = qpf.components.container.Inline.derive(function(){
+    var ToolbarGroup = qpf.container.Inline.derive(function(){
         return {}
     }, {
         type : "TOOLBARGROUP",
         css : "toolbar-group"
     });
 
-    qpf.components.container.Container.provideBinding("toolbargroup", ToolbarGroup);
+    qpf.container.Container.provideBinding("toolbargroup", ToolbarGroup);
 
     return ToolbarGroup;
 })

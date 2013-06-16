@@ -15,7 +15,7 @@ define(function(require){
         xml : xml,
 
         viewportWidth : ko.observable(960),
-        viewportHeight : ko.observable(1000),
+        viewportHeight : ko.observable(600),
 
         viewportScale : ko.observable(1)
     });
@@ -63,7 +63,7 @@ define(function(require){
 
     var selectedElements = [];
 
-    var draggable = new qpf.components.mixin.Draggable();
+    var draggable = new qpf.mixin.Draggable();
     // Update the position property manually
     draggable.on("drag", function(){
         _.each(selectedElements, function(element){

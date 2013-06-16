@@ -788,7 +788,7 @@ define('core/clazz',['require','./mixin/derive','./mixin/event','_'],function(re
 // Base class of all components
 // it also provides some util methods like
 //=====================================
-define('components/base',['require','core/clazz','core/mixin/event','knockout','$','_'],function(require){
+define('base',['require','core/clazz','core/mixin/event','knockout','$','_'],function(require){
 
 var Clazz = require("core/clazz");
 var Event = require("core/mixin/event");
@@ -1008,7 +1008,7 @@ return {    // Public properties
             var attr = attributes[name];
             var propInVM = this[name];
             // create new attribute when property is not existed, even if it will not be used
-            if( ! propInVM ){
+            if( typeof(propInVM) === "undefined" ){
                 var value = ko.utils.unwrapObservable(attr);
                 // is observableArray or plain array
                 if( (ko.isObservable(attr) && attr.push) ||
@@ -1352,7 +1352,7 @@ return Base;
 // provide util function to operate
 // the components
 //===========================
-define('components/util',['require','knockout','core/xmlparser','./base'],function(require){
+define('util',['require','knockout','core/xmlparser','./base'],function(require){
 
 var ko = require("knockout");
 var XMLParser = require("core/xmlparser");
@@ -1391,7 +1391,7 @@ return exports;
 // @method      remove( target )
 //=================================
 
-define('components/mixin/draggable',['require','core/mixin/derive','core/mixin/event','knockout','$','_'],function(require){
+define('mixin/draggable',['require','core/mixin/derive','core/mixin/event','knockout','$','_'],function(require){
 
 var Derive = require("core/mixin/derive");
 var Event = require("core/mixin/event");
@@ -1679,8 +1679,6 @@ _mouseMove : function(e){
 
     var self = e.data.context;
 
-    self._triggerProxy("drag", e);
-
     var offset = {
         x : e.pageX - self._mouseStart.x,
         y : e.pageY - self._mouseStart.y
@@ -1720,7 +1718,9 @@ _mouseMove : function(e){
             "left" : e.pageX,
             "top" : e.pageY
         })
-    }   
+    };
+
+    self._triggerProxy("drag", e);
 },
 
 _mouseUp : function(e){
@@ -1784,7 +1784,7 @@ return Draggable;
 // Meta component is the ui component
 // that has no children
 //==================================
-define('components/meta/meta',['require','../base','knockout'],function(require){
+define('meta/meta',['require','../base','knockout'],function(require){
 
 var Base = require("../base");
 var ko = require("knockout");
@@ -1795,10 +1795,12 @@ var Meta = Base.derive(
     type : "META",
 
     css : 'meta'
-})
+});
 
 // Inherit the static methods
 Meta.provideBinding = Base.provideBinding;
+
+Meta.provideBinding("meta", Meta);
 
 return Meta;
 
@@ -1806,7 +1808,7 @@ return Meta;
 //======================================
 // Button component
 //======================================
-define('components/meta/button',['require','./meta','core/xmlparser','knockout','$','_'],function(require){
+define('meta/button',['require','./meta','core/xmlparser','knockout','$','_'],function(require){
 
 var Meta = require("./meta");
 var XMLParser = require("core/xmlparser");
@@ -1851,7 +1853,7 @@ return Button;
 //======================================
 // Checkbox component
 //======================================
-define('components/meta/checkbox',['require','./meta','knockout','$','_'],function(require){
+define('meta/checkbox',['require','./meta','knockout','$','_'],function(require){
 
 var Meta = require("./meta");
 var ko = require('knockout');
@@ -1896,7 +1898,7 @@ return Checkbox;
 //          @property   value
 //          @property   text
 //===================================
-define('components/meta/combobox',['require','./meta','core/xmlparser','knockout','$','_'],function(require){
+define('meta/combobox',['require','./meta','core/xmlparser','knockout','$','_'],function(require){
 
 var Meta = require("./meta");
 var XMLParser = require("core/xmlparser");
@@ -2014,7 +2016,7 @@ return Combobox;
 //======================================
 // Label component
 //======================================
-define('components/meta/label',['require','./meta','core/xmlparser','knockout','$','_'],function(require){
+define('meta/label',['require','./meta','core/xmlparser','knockout','$','_'],function(require){
 
 var Meta = require("./meta");
 var XMLParser = require("core/xmlparser");
@@ -2066,7 +2068,7 @@ return Label;
 // @method updatePosition   update the slider position manually
 // @event change newValue prevValue self[Slider]
 //===================================
-define('components/meta/slider',['require','./meta','../mixin/draggable','knockout','$','_'],function(require){
+define('meta/slider',['require','./meta','../mixin/draggable','knockout','$','_'],function(require){
 
 var Meta = require("./meta");
 var Draggable = require("../mixin/draggable");
@@ -2282,7 +2284,7 @@ return Slider;
 //
 // @event change newValue prevValue self[Spinner]
 //===================================
-define('components/meta/spinner',['require','./meta','knockout','$','_'],function(require){
+define('meta/spinner',['require','./meta','knockout','$','_'],function(require){
 
 var Meta = require('./meta');
 var ko = require("knockout");
@@ -2389,7 +2391,7 @@ return Spinner;
 // @VMProp placeholder
 //
 //===================================
-define('components/meta/textfield',['require','./meta','knockout','_'],function(require){
+define('meta/textfield',['require','./meta','knockout','_'],function(require){
 
 var Meta = require('./meta');
 var ko = require("knockout");
@@ -2425,7 +2427,7 @@ return TextField;
 //============================================
 // Base class of all container component
 //============================================
-define('components/container/container',['require','../base','knockout','$','_'],function(require){
+define('container/container',['require','../base','knockout','$','_'],function(require){
 
 var Base = require("../base");
 var ko = require("knockout");
@@ -2584,7 +2586,7 @@ return Container;
 // Panel
 // Container has title and content
 //===================================
-define('components/container/panel',['require','./container','knockout','$'],function(require){
+define('container/panel',['require','./container','knockout','$'],function(require){
 
 var Container = require("./container");
 var ko = require("knockout");
@@ -2644,7 +2646,7 @@ return Panel;
 // Window is a panel wich can be drag
 // and close
 //===================================
-define('components/container/window',['require','./container','./panel','../mixin/draggable','knockout','$','_'],function(require){
+define('container/window',['require','./container','./panel','../mixin/draggable','knockout','$','_'],function(require){
 
 var Container = require("./container");
 var Panel = require("./panel");
@@ -2706,7 +2708,7 @@ return Window;
 // Tab Container
 // Children of tab container must be a panel
 //============================================
-define('components/container/tab',['require','./container','./panel','knockout','$','_'],function(require){
+define('container/tab',['require','./container','./panel','knockout','$','_'],function(require){
 
 var Container = require("./container");
 var Panel = require("./panel");
@@ -2854,7 +2856,7 @@ return Tab;
 // base class of vbox and hbox
 //===============================================
 
-define('components/container/box',['require','./container','knockout','$','_'],function(require){
+define('container/box',['require','./container','knockout','$','_'],function(require){
 
 var Container = require("./container");
 var ko = require("knockout");
@@ -2934,7 +2936,7 @@ return Box;
 //      padding ????
 //===============================================
 
-define('components/container/vbox',['require','./container','./box','knockout','$','_'],function(require){
+define('container/vbox',['require','./container','./box','knockout','$','_'],function(require){
 
 var Container = require("./container");
 var Box = require("./box");
@@ -3024,7 +3026,7 @@ return vBox;
 // https://github.com/doctyper/flexie/blob/master/src/flexie.js
 //===============================================
 
-define('components/container/hbox',['require','./container','./box','knockout','$','_'],function(require){
+define('container/hbox',['require','./container','./box','knockout','$','_'],function(require){
 
 var Container = require("./container");
 var Box = require("./box");
@@ -3109,7 +3111,7 @@ return hBox;
 //=============================================
 // Inline Layout
 //=============================================
-define('components/container/inline',['require','./container','knockout','$'],function(require){
+define('container/inline',['require','./container','knockout','$'],function(require){
 
 var Container = require("./container");
 var ko = require("knockout");
@@ -3140,7 +3142,7 @@ return Inline;
 // event of Window and resize all the component in the app
 //=============================================================
 
-define('components/container/application',['require','./container','knockout','$'],function(require){
+define('container/application',['require','./container','knockout','$'],function(require){
 
 var Container = require("./container");
 var ko = require("knockout");
@@ -3176,7 +3178,7 @@ return Application;
 // Widget is component mixed with meta 
 // ,containers and other HTMLDOMElenents
 //====================================
-define('components/widget/widget',['require','../base','../meta/meta','../container/container','knockout','_'],function(require){
+define('widget/widget',['require','../base','../meta/meta','../container/container','knockout','_'],function(require){
 
 var Base = require("../base");
 var Meta = require("../meta/meta");
@@ -3210,7 +3212,7 @@ return Widget;
 // @VMProp  constrainType
 // @VMProp  constrainRatio
 //===================================
-define('components/widget/vector',['require','./widget','../base','core/xmlparser','knockout','$','../meta/spinner','../meta/slider','_'],function(require){
+define('widget/vector',['require','./widget','../base','core/xmlparser','knockout','$','../meta/spinner','../meta/slider','_'],function(require){
 
 var Widget = require("./widget");
 var Base = require("../base");
@@ -3406,7 +3408,7 @@ return Vector;
 // supply hsv and rgb color space
 // http://en.wikipedia.org/wiki/HSV_color_space.
 //============================
-define('components/widget/color_vm',['require','knockout','core/clazz','_'],function(require){
+define('widget/color_vm',['require','knockout','core/clazz','_'],function(require){
 
 var ko = require("knockout");
 var Clazz = require("core/clazz");
@@ -3605,7 +3607,7 @@ return Color;
 //=============================================
 // Palette
 //=============================================
-define('components/widget/palette',['require','./widget','knockout','./color_vm','$','_','components/widget/vector','components/meta/textfield','components/meta/slider'],function(require){
+define('widget/palette',['require','./widget','knockout','./color_vm','$','_','widget/vector','meta/textfield','meta/slider'],function(require){
 
 var Widget = require("./widget");
 var ko = require("knockout");
@@ -3614,9 +3616,9 @@ var $ = require("$");
 var _ = require("_");
 
 // component will be used in the widget
-require("components/widget/vector");
-require("components/meta/textfield");
-require("components/meta/slider");
+require("widget/vector");
+require("meta/textfield");
+require("meta/slider");
 
 var Palette = Widget.derive(function(){
     var ret = new Color;
@@ -3826,7 +3828,7 @@ Widget.provideBinding("palette", Palette);
 return Palette;
 });
 // portal for all the components
-define('src/qpf',['require','core/xmlparser','core/mixin/derive','core/mixin/event','core/clazz','components/base','components/util','components/mixin/draggable','components/meta/meta','components/meta/button','components/meta/checkbox','components/meta/combobox','components/meta/label','components/meta/slider','components/meta/spinner','components/meta/textfield','components/container/container','components/container/panel','components/container/window','components/container/tab','components/container/vbox','components/container/hbox','components/container/inline','components/container/application','components/widget/widget','components/widget/vector','components/widget/palette'],function(require){
+define('qpf',['require','core/xmlparser','core/mixin/derive','core/mixin/event','core/clazz','base','util','mixin/draggable','meta/meta','meta/button','meta/checkbox','meta/combobox','meta/label','meta/slider','meta/spinner','meta/textfield','container/container','container/panel','container/window','container/tab','container/vbox','container/hbox','container/inline','container/application','widget/widget','widget/vector','widget/palette'],function(require){
 
     var qpf = {
         core : {
@@ -3837,45 +3839,43 @@ define('src/qpf',['require','core/xmlparser','core/mixin/derive','core/mixin/eve
             },
             Clazz : require("core/clazz")
         },
-        components : {
-            Base : require('components/base'),
-            util : require("components/util"),
-            mixin : {
-                Draggable : require('components/mixin/draggable')
-            },
-            meta : {
-                Meta : require('components/meta/meta'),
-                Button : require('components/meta/button'),
-                Checkbox : require('components/meta/checkbox'),
-                Combobox : require('components/meta/combobox'),
-                Label : require('components/meta/label'),
-                Slider : require('components/meta/slider'),
-                Spinner : require('components/meta/spinner'),
-                Textfield : require('components/meta/textfield')
-            },
-            container : {
-                Container : require('components/container/container'),
-                Panel : require('components/container/panel'),
-                Window : require('components/container/window'),
-                Tab : require("components/container/tab"),
-                VBox : require("components/container/vbox"),
-                HBox : require("components/container/hbox"),
-                Inline : require("components/container/inline"),
-                Application : require("components/container/application")
-            },
-            widget : {
-                Widget : require("components/widget/widget"),
-                Vector : require("components/widget/vector"),
-                Palette : require("components/widget/palette")
-            }
+        Base : require('base'),
+        util : require("util"),
+        mixin : {
+            Draggable : require('mixin/draggable')
+        },
+        meta : {
+            Meta : require('meta/meta'),
+            Button : require('meta/button'),
+            Checkbox : require('meta/checkbox'),
+            Combobox : require('meta/combobox'),
+            Label : require('meta/label'),
+            Slider : require('meta/slider'),
+            Spinner : require('meta/spinner'),
+            Textfield : require('meta/textfield')
+        },
+        container : {
+            Container : require('container/container'),
+            Panel : require('container/panel'),
+            Window : require('container/window'),
+            Tab : require("container/tab"),
+            VBox : require("container/vbox"),
+            HBox : require("container/hbox"),
+            Inline : require("container/inline"),
+            Application : require("container/application")
+        },
+        widget : {
+            Widget : require("widget/widget"),
+            Vector : require("widget/vector"),
+            Palette : require("widget/palette")
         }
     }
 
-    qpf.create = qpf.components.Base.create;
+    qpf.create = qpf.Base.create;
 
     return qpf;
 });
-var qpf = require("src/qpf");
+var qpf = require("qpf");
 
 // only export the use method 
 _exports.use = function(path){

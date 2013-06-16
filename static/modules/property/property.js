@@ -2,7 +2,7 @@ define(function(require){
 
     var qpf = require("qpf");
     var ko = require("knockout");
-    var Widget = qpf.components.widget.Widget;
+    var Widget = qpf.widget.Widget;
 
     var PropertyView = Widget.derive(function(){
         return {
