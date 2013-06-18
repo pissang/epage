@@ -1,8 +1,7 @@
 <inline id="Toolbar">
     <toolbargroup>
-        <iconbutton icon="save"></iconbutton>
-        <iconbutton icon="load"></iconbutton>
-        <iconbutton icon="export"></iconbutton>
+        <iconbutton icon="save" onclick="@binding[exportProject]"></iconbutton>
+        <iconbutton icon="load" onclick="@binding[importProject]"></iconbutton>
     </toolbargroup>
     <meta class="divider"></meta>
     <toolbargroup>

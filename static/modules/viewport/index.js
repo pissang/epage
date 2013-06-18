@@ -54,8 +54,18 @@ define(function(require){
 
     viewport.on("start", function(){
         _viewport = viewport.mainComponent.$el.find("#ViewportMain").qpf("get")[0];
+
+        viewport.$el.delegate('.epage-element', "click", selectElement);
+
         initDragUpload();
-    })
+    });
+
+    function selectElement(e){
+        var eid = $(this).attr("data-epage-eid");
+        if(eid){
+            hierarchy.selectElementsByEID([eid]);
+        }
+    }
 
     hierarchy.on("create", function(element){
         _viewport.addElement(element);
@@ -103,9 +113,7 @@ define(function(require){
                 imageReader.onload = function(e){
                     imageReader.onload = null;
                     command.execute("create", "image", {
-                        src : {
-                            value : e.target.result
-                        }
+                        src : e.target.result
                     })
                 }
                 imageReader.readAsDataURL(file);

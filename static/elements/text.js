@@ -1,17 +1,27 @@
 define(function(require){
 
-    var component = require("core/component");
+    var factory = require("core/factory");
     var ko = require("knockout");
     var onecolor = require("onecolor");
 
-    component.register("text", {
+    factory.register("text", {
         type : "TEXT",
-        makeProperties : function(){
+        extendProperties : function(){
+            return {
+                text : ko.observable("请输入文字"),
+                fontFamily : ko.observable("黑体, SimHei"),
+                fontSize : ko.observable(16),
+                color : ko.observable(0x000000),
+                horzontalAlign : ko.observable('center'),
+                verticleAlign : ko.observable('middle')
+            }
+        },
+        extendUIConfig : function(){
             return {
                 text : {
                     label : "文本",
                     ui : "textfield",
-                    text : ko.observable("请输入文字")
+                    text : this.properties.text
                 },
 
                 fontFamily : {
@@ -31,18 +41,18 @@ define(function(require){
                         { text:'Impact',value:'impact,chicago'},
                         { text:'Times New Roman',value:'times new roman'}
                     ],
-                    value : ko.observable("黑体, SimHei")
+                    value : this.properties.fontFamily
                 },
 
                 fontSize : {
                     label : "大小",
                     ui : "spinner",
-                    value : ko.observable(16)
+                    value : this.properties.fontSize
                 },
                 color : {
                     label : "颜色",
                     ui : "color",
-                    color : ko.observable(0x000000)
+                    color : this.properties.color
                 },
 
                 horzontalAlign : {
@@ -59,7 +69,7 @@ define(function(require){
                         value : 'right',
                         text : "右对齐"
                     }],
-                    value : ko.observable('center')
+                    value : this.properties.horzontalAlign
                 },
 
                 verticleAlign : {
@@ -76,7 +86,7 @@ define(function(require){
                         value : 'bottom',
                         text : "底部对齐"
                     }],
-                    value : ko.observable('middle')
+                    value : this.properties.verticleAlign
                 }
             }
         },
@@ -84,13 +94,12 @@ define(function(require){
         onCreate : function($wrapper){
             var $text = $("<span style='line-height:normal;display:inline-block;vertical-align:middle;width:100%;'></span>");
             var self = this;
-            ko.applyBindings(this.properties, $text[0]);
 
             $wrapper.append($text);
 
             //Font family
             ko.computed(function(){
-                var fontFamily = self.properties.fontFamily.value();
+                var fontFamily = self.properties.fontFamily();
                 $text.css({
                     'font-family' : fontFamily
                 })
@@ -98,9 +107,9 @@ define(function(require){
 
             //Font size and text color
             ko.computed(function(){
-                var text = self.properties.text.text();
-                var fontSize = self.properties.fontSize.value()+"px";
-                var color = onecolor(self.properties.color.color()).css();
+                var text = self.properties.text();
+                var fontSize = self.properties.fontSize()+"px";
+                var color = onecolor(self.properties.color()).css();
 
                 $text.html(text)
                     .css({
@@ -111,8 +120,8 @@ define(function(require){
 
             //Text align
             ko.computed(function(){
-                var verticleAlign = self.properties.verticleAlign.value();
-                var horzontalAlign = self.properties.horzontalAlign.value();
+                var verticleAlign = self.properties.verticleAlign();
+                var horzontalAlign = self.properties.horzontalAlign();
 
                 $text.css({
                     'text-align' : horzontalAlign,
@@ -121,7 +130,7 @@ define(function(require){
             })
 
             ko.computed(function(){
-                var height = self.properties.size.items[1].value();
+                var height = self.properties.height();
                 if(height){
                     $wrapper.css({
                         'line-height' : height + 'px'

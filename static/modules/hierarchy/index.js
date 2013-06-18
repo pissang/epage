@@ -2,12 +2,11 @@ define(function(require){
 
     var qpf = require("qpf");
     var ko = require("knockout");
-    var componentFactory = require("core/component");
+    var componentFactory = require("core/factory");
     var command = require("core/command");
     var Module = require("../module");
     var xml = require("text!./hierarchy.xml");
     var _ = require("_");
-    var List = require("modules/common/list");
 
     var propertyModule = require("../property/index");
 
@@ -29,26 +28,53 @@ define(function(require){
 
         ElementView : ElementView,
 
-        selectElements : function(data){
+        _selectElements : function(data){
             hierarchy.selectedElements(_.map(data, function(item){
                 return item.target;
             }));
+        },
+
+        selectElementsByEID : function(eidList){
+            var elements = [];
+            _.each(eidList, function(eid){
+                var el = componentFactory.getElementByEID(eid);
+                if(el){
+                    elements.push(el);
+                }
+            });
+            hierarchy.selectedElements(elements);
+        },
+
+        load : function(elementsList){
+            this.elementsList(_.map(elementsList, function(element){
+                return {
+                    id : element.properties.id,
+                    target : element
+                }
+            }));
+            _.each(elementsList, function(element){
+                hierarchy.trigger("create", element);
+            })
         }
     });
+
+    hierarchy.elements = ko.computed({
+        read : function(){
+            return _.map(hierarchy.elementsList(), function(item){
+                return item.target;
+            });
+        },
+        deferEvaluation : true
+    })
 
     command.register("create", {
         execute : function(name, properties){
             var element = componentFactory.create(name, properties);
-            element.$wrapper.mousedown(function(){
-                hierarchy.selectedElements([element]);
-            })
 
             hierarchy.elementsList.push({
-                id : element.properties.id.text,
+                id : element.properties.id,
                 target : element
             });
-
-            propertyModule.showProperties(element.properties);
 
             // Dispatch create event
             hierarchy.trigger("create", element);
@@ -73,7 +99,7 @@ define(function(require){
         var selectedElements = hierarchy.selectedElements();
         var lastSelectedElement = selectedElements[selectedElements.length-1];
         if(lastSelectedElement){
-            propertyModule.showProperties(lastSelectedElement.properties);
+            propertyModule.showProperties(lastSelectedElement.uiConfig);
         }
         hierarchy.trigger("select", selectedElements);
 

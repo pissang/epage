@@ -6,7 +6,6 @@ define(function(require){
     var xml = require("text!./property.xml");
     var _ = require("_");
 
-    var List = require("modules/common/list");
     var PropertyItemView = require("./property");
 
     var property = new Module({
@@ -27,10 +26,13 @@ define(function(require){
             _.each(properties, function(property){
                 if(property.ui){
                     property.type = property.ui;
-                    var config = _.omit(property, 'label', 'ui', 'field');
+                    var config = _.omit(property, 'label', 'ui', 'field', 'visible');
                     var item = {
-                        label : ko.observable(property.label),
+                        label : property.label,
                         config : ko.observable(config)
+                    }
+                    if(property.visible){
+                        item.visible = property.visible;
                     }
                     switch(property.field){
                         case "layout":

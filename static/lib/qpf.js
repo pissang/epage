@@ -2082,8 +2082,6 @@ var Slider = Meta.derive(function(){
 
         $el : $('<div data-bind="css:orientation"></div>'),
 
-        value : ko.observable(0),
-
         step : ko.observable(1),
 
         min : ko.observable(-100),
@@ -2105,11 +2103,26 @@ var Slider = Meta.derive(function(){
     }
 
     ret.value = ko.observable(1).extend({
-        numeric : ret.precision,
         clamp : { 
                     max : ret.max,
                     min : ret.min
                 }
+    });
+
+    ret._valueNumeric = ko.computed(function(){
+        return ret.value().toFixed(ret.precision());
+    })
+
+    ret._percentageStr = ko.computed({
+        read : function(){
+            var min = ret.min();
+            var max = ret.max();
+            var value = ret.value();
+            var percentage = ( value - min ) / ( max - min );
+            
+            return percentage * 100 + "%";
+        },
+        deferEvaluation : true
     })
     return ret;
 
@@ -2120,17 +2133,15 @@ var Slider = Meta.derive(function(){
     css : 'slider',
 
     template : '<div class="qpf-slider-groove-box">\
-                    <div class="qpf-slider-groove-outer">\
-                        <div class="qpf-slider-groove">\
-                            <div class="qpf-slider-percentage"></div>\
-                        </div>\
+                    <div class="qpf-slider-groove">\
+                        <div class="qpf-slider-percentage" data-bind="style:{width:_percentageStr}"></div>\
                     </div>\
                 </div>\
                 <div class="qpf-slider-min" data-bind="text:_format(min())"></div>\
                 <div class="qpf-slider-max" data-bind="text:_format(max())"></div>\
-                <div class="qpf-slider-control">\
+                <div class="qpf-slider-control" data-bind="style:{left:_percentageStr}">\
                     <div class="qpf-slider-control-inner"></div>\
-                    <div class="qpf-slider-value" data-bind="text:_format(value())"></div>\
+                    <div class="qpf-slider-value" data-bind="text:_format(_valueNumeric())"></div>\
                 </div>',
 
     eventsProvided : _.union(Meta.prototype.eventsProvided, "change"),
@@ -2143,30 +2154,24 @@ var Slider = Meta.derive(function(){
             }, this)
         });
 
-        var prevValue = this.value();
-        this.value.subscribe(function(newValue){
-            if( this._$box){
-                this.updatePosition();
-            }
-            this.trigger("change", parseFloat(newValue), parseFloat(prevValue), this);
-            
-            prevValue = newValue;
+        var prevValue = this._valueNumeric();
+        this.value.subscribe(function(){
+            this.trigger("change", this._valueNumeric(), prevValue, this);
+            prevValue = this._valueNumeric();
         }, this);
     },
 
     afterRender : function(){
 
         // cache the element;
-        this._$box = this.$el.find(".qpf-slider-groove-box");
+        this._$groove = this.$el.find(".qpf-slider-groove");
         this._$percentage = this.$el.find(".qpf-slider-percentage");
         this._$control = this.$el.find(".qpf-slider-control");
 
-        this.draggable.container = this.$el.find(".qpf-slider-groove-box");
+        this.draggable.container = this._$groove;
         var item = this.draggable.add( this._$control );
         
         item.on("drag", this._dragHandler, this);
-
-        this.updatePosition();
 
         // disable text selection
         this.$el.mousedown(function(e){
@@ -2175,33 +2180,7 @@ var Slider = Meta.derive(function(){
     },
 
     onResize : function(){
-
-        this.updatePosition();
         Meta.prototype.onResize.call(this);
-    },
-
-    _dragHandler : function(){
-
-        var percentage = this.computePercentage(),
-            min = parseFloat( this.min() ),
-            max = parseFloat( this.max() ),
-            value = (max-min)*percentage+min;
-
-        this.value( value );
-
-        
-    },
-
-    _cacheSize : function(){
-
-        // cache the size of the groove and slider
-        var isHorizontal =this._isHorizontal();
-        this._boxSize =  isHorizontal ?
-                            this._$box.width() :
-                            this._$box.height();
-        this._sliderSize = isHorizontal ?
-                            this._$control.width() :
-                            this._$control.height();
     },
 
     computePercentage : function(){
@@ -2211,15 +2190,27 @@ var Slider = Meta.derive(function(){
         }
 
         var offset = this._computeOffset();
-        return offset / ( this._boxSize - this._sliderSize );
+        return offset / ( this._grooveSize - this._sliderSize );
+    },
+
+    _cacheSize : function(){
+
+        // cache the size of the groove and slider
+        var isHorizontal =this._isHorizontal();
+        this._grooveSize =  isHorizontal ?
+                            this._$groove.width() :
+                            this._$groove.height();
+        this._sliderSize = isHorizontal ?
+                            this._$control.width() :
+                            this._$control.height();
     },
 
     _computeOffset : function(){
 
         var isHorizontal = this._isHorizontal();
         var grooveOffset = isHorizontal ?
-                            this._$box.offset().left :
-                            this._$box.offset().top;
+                            this._$groove.offset().left :
+                            this._$groove.offset().top;
         var sliderOffset = isHorizontal ? 
                             this._$control.offset().left :
                             this._$control.offset().top;
@@ -2227,47 +2218,19 @@ var Slider = Meta.derive(function(){
         return sliderOffset - grooveOffset;
     },
 
-    _setOffset : function(offsetSize){
-        var isHorizontal = this._isHorizontal();
-        var grooveOffset = isHorizontal ?
-                            this._$box.offset().left :
-                            this._$box.offset().top;
-        var offset = isHorizontal ? 
-                    {left : grooveOffset+offsetSize} :
-                    {top : grooveOffset+offsetSize};
+    _dragHandler : function(){
 
-        this._$control.offset( offset );
-    },
+        var percentage = this.computePercentage(),
+            min = parseFloat( this.min() ),
+            max = parseFloat( this.max() ),
+            value = (max-min)*percentage+min;
 
-    updatePosition : function(){
-        
-        if( ! this._$control){
-            return;
-        }
-        if( this.autoResize ){
-            this._cacheSize();
-        }
-
-        var min = this.min();
-        var max = this.max();
-        var value = this.value();
-        var percentage = ( value - min ) / ( max - min );
-        
-        var size = (this._boxSize-this._sliderSize)*percentage;
-        
-        if( this._boxSize > 0 ){
-            this._setOffset(size);
-        }else{  //incase the element is still not in the document
-            this._$control.css( this._isHorizontal() ?
-                                "right" : "bottom", (1-percentage)*100+"%");
-        }
-        this._$percentage.css( this._isHorizontal() ?
-                                'width' : 'height', percentage*100+"%");
+        this.value( value );  
     },
 
     _isHorizontal : function(){
         return ko.utils.unwrapObservable( this.orientation ) == "horizontal";
-    }
+    },
 })
 
 Meta.provideBinding("slider", Slider);

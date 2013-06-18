@@ -6,11 +6,14 @@ define(function(require){
     var xml = require("text!./toolbar.xml");
     var command = require("core/command");
     var $ = require("$");
-    //
+
+    var project = require("project/project");
+
     var hierarchyModule = require("../hierarchy/index");
     var viewportModule = require("../viewport/index");
 
-    var $fileInput = $("<input type='file' />");
+    var $imageInput = $("<input type='file' />");
+    var $projectInput = $("<input type='file' />");
 
     require("./toolbargroup");
 
@@ -22,7 +25,7 @@ define(function(require){
             command.execute("create");
         },
         createImage : function(){
-            $fileInput.click();
+            $imageInput.click();
         },
         createText : function(){
             command.execute("create", "text");
@@ -43,22 +46,45 @@ define(function(require){
         }),
 
         viewportWidth : viewportModule.viewportWidth,
-        viewportHeight : viewportModule.viewportHeight
+        viewportHeight : viewportModule.viewportHeight,
+
+        exportProject : function(){
+            var result = project.export();
+            var blob = new Blob([JSON.stringify(result, null, 2)], {
+                type : "text/plain;charset=utf-8"
+            });
+            saveAs(blob, "page.json");
+        },
+        importProject : function(){
+            $projectInput.click();
+        }
     });
 
-    var imageReader = new FileReader();
-    $fileInput[0].addEventListener("change", function(e){
+    var fileReader = new FileReader();
+
+    $imageInput[0].addEventListener("change", function(e){
         var file = e.target.files[0];
         if(file && file.type.match(/image/)){
-            imageReader.onload = function(e){
-                imageReader.onload = null;
+            fileReader.onload = function(e){
+                fileReader.onload = null;
                 command.execute("create", "image", {
-                    src : {
-                        value : e.target.result
-                    }
+                    src : e.target.result
                 })
             }
-            imageReader.readAsDataURL(file);
+            fileReader.readAsDataURL(file);
+        }
+    });
+
+    $projectInput[0].addEventListener("change", function(e){
+        var file = e.target.files[0];
+
+        if(file && file.type.match(/json/)){
+            fileReader.onload = function(e){
+                fileReader.onload = null;
+
+                var elements = project.import(JSON.parse(e.target.result));
+            }
+            fileReader.readAsText(file);
         }
     })
 
