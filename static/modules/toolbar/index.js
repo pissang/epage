@@ -12,9 +12,6 @@ define(function(require){
     var hierarchyModule = require("../hierarchy/index");
     var viewportModule = require("../viewport/index");
 
-    var $imageInput = $("<input type='file' />");
-    var $projectInput = $("<input type='file' />");
-
     require("./toolbargroup");
 
     var toolbar = new Module({
@@ -25,6 +22,8 @@ define(function(require){
             command.execute("create");
         },
         createImage : function(){
+            var $imageInput = $("<input type='file' />");
+            $imageInput[0].addEventListener("change", uploadImageFile);
             $imageInput.click();
         },
         createText : function(){
@@ -53,16 +52,18 @@ define(function(require){
             var blob = new Blob([JSON.stringify(result, null, 2)], {
                 type : "text/plain;charset=utf-8"
             });
-            saveAs(blob, "page.json");
+            saveAs(blob, "example.epage");
         },
         importProject : function(){
+            var $projectInput = $("<input type='file' />");
+            $projectInput[0].addEventListener("change", uploadProjectFile);
             $projectInput.click();
         }
     });
 
     var fileReader = new FileReader();
 
-    $imageInput[0].addEventListener("change", function(e){
+    function uploadImageFile(e){
         var file = e.target.files[0];
         if(file && file.type.match(/image/)){
             fileReader.onload = function(e){
@@ -70,23 +71,25 @@ define(function(require){
                 command.execute("create", "image", {
                     src : e.target.result
                 })
+
             }
             fileReader.readAsDataURL(file);
         }
-    });
+    }
 
-    $projectInput[0].addEventListener("change", function(e){
+    function uploadProjectFile(e){
         var file = e.target.files[0];
 
-        if(file && file.type.match(/json/)){
+        if(file && file.name.substr(-5) === 'epage'){
             fileReader.onload = function(e){
                 fileReader.onload = null;
 
                 var elements = project.import(JSON.parse(e.target.result));
+
             }
             fileReader.readAsText(file);
         }
-    })
+    }
 
     require("elements/image");
     require("elements/text");
