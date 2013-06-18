@@ -60,6 +60,7 @@
                         "modules/common/gradient",
                         "modules/common/color"]
             },
+            waitSeconds : 30
         })
     }
 
