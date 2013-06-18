@@ -104,6 +104,29 @@ body{
         padding: 0px;
     }
 
+    .qpf-ui-gradient{
+
+        .qpf-gradient-preview{
+            height:20px;
+            box-shadow: inset 0px 0px 5px #000;
+        }
+        .qpf-gradient-stops{
+            
+            height: 10px;
+            position: relative;
+
+            .qpf-gradient-stop{
+                position: absolute;
+                width:0px;
+            }
+            .qpf-gradient-stop-inner{
+                margin-left: -6px;
+                width: 12px;
+                height: 14px;
+                background-image: url(images/slider-control-up.png);
+            }
+        }
+    }
 }
 
 #Toolbar{
@@ -132,9 +155,6 @@ body{
             }
             &.load{
                 background-image: url(images/load.svg);
-            }
-            &.export{
-                background-image: url(images/export.svg);
             }
 
             &.element{
@@ -339,6 +359,7 @@ body{
         }
         .qpf-property-right{
             margin-left:70px;
+            margin-right: 10px;
         }
     }
 }
@@ -367,7 +388,7 @@ body{
 }
 
 #Palette{
-    box-shadow: 0px 0px 20px black;
+    box-shadow: 0px 0px 10px black;
 
     .qpf-panel-body{
         padding:10px;

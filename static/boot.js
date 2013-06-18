@@ -12,6 +12,7 @@
     //=========================
     $LAB.script("require.js")
         .script("director.js")
+        .script("FileSaver.js")
         .wait(boot);
 
     //========================
@@ -56,6 +57,7 @@
                         "modules/common/togglebutton",
                         "modules/common/toggleiconbutton",
                         "modules/common/nativehtml",
+                        "modules/common/gradient",
                         "modules/common/color"]
             },
         })

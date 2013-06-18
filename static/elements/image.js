@@ -1,16 +1,14 @@
 define(function(require){
 
-    var component = require("core/component");
+    var factory = require("core/factory");
     var ko = require("knockout");
     var _ = require("_");
 
-    component.register("image", {
+    factory.register("image", {
         type : "IMAGE",
-        makeProperties : function(){
+        extendProperties : function(){
             return {
-                src : {
-                    value : ko.observable("")
-                }
+                src : ko.observable("")
             }
         },
         onCreate : function($wrapper){
@@ -23,8 +21,9 @@ define(function(require){
             }, 1);
             // Size of image;
             ko.computed(function(){
-                var width = self.properties.size.items[0].value(),
-                    height = self.properties.size.items[1].value();
+                var width = self.properties.width(),
+                    height = self.properties.height();
+
                 if(img.src && img.complete){
                     updateImageSize(width, height);
                 }
@@ -33,16 +32,16 @@ define(function(require){
                 img.onload = function(){
                     var width = img.width,
                         height = img.height;
-                    self.properties.size.items[0].value(width);
-                    self.properties.size.items[1].value(height);
+                    self.properties.width(width);
+                    self.properties.height(height);
                     img.onload = null;
                 }
-                img.src = self.properties.src.value();
+                img.src = self.properties.src();
             });
             // Border radius
             ko.computed({
                 read : function(){
-                    var br = self.properties.borderRadius.items;
+                    var br = self.uiConfig.borderRadius.items;
 
                     $(img).css({
                         'border-radius' : _.map(br, function(item){
@@ -52,6 +51,10 @@ define(function(require){
                 }
             });
             $wrapper.append(img);
+        },
+
+        onExport : function(json){
+            json.properties.src = this.makeAsset("image", "src", json.properties.src, json.assets);
         }
     })
 })

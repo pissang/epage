@@ -5,19 +5,7 @@ define(function(require){
     var Meta = qpf.meta.Meta;
     var onecolor = require("onecolor");
 
-    var palette = new qpf.widget.Palette();
-    palette.width(370);
-    var popup = new qpf.container.Window();
-    popup.title("调色器");
-    popup.id("Palette");
-    popup.add(palette);
-
-    document.body.appendChild(popup.$el[0]);
-    popup.$el.css({
-        display : "none",
-        'z-index' : "10000"
-    })
-    popup.render();
+    var palette = require("./palette");
 
     var Color = Meta.derive(function(){
         var ret = {
@@ -45,11 +33,9 @@ define(function(require){
         },
 
         showPalette : function(){
-            popup.$el.css({
-                display : "block",
-                left : '300px',
-                top : '100px'
-            });
+
+            palette.show();
+
             palette.on("change", this._paletteChange, this);
             palette.on("cancel", this._paletteCancel, this);
             palette.on("apply", this._paletteApply, this);
@@ -61,7 +47,7 @@ define(function(require){
             this.color(hex);
         },
         _paletteCancel : function(){
-            popup.$el.css("display", "none");
+            palette.hide();
             palette.off("change");
             palette.off("apply");
             palette.off("cancel");
