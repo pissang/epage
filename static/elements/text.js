@@ -13,7 +13,8 @@ define(function(require){
                 fontSize : ko.observable(16),
                 color : ko.observable(0x000000),
                 horzontalAlign : ko.observable('center'),
-                verticleAlign : ko.observable('middle')
+                verticleAlign : ko.observable('middle'),
+                lineHeight : ko.observable(0)
             }
         },
         extendUIConfig : function(){
@@ -49,6 +50,7 @@ define(function(require){
                     ui : "spinner",
                     value : this.properties.fontSize
                 },
+
                 color : {
                     label : "颜色",
                     ui : "color",
@@ -87,6 +89,13 @@ define(function(require){
                         text : "底部对齐"
                     }],
                     value : this.properties.verticleAlign
+                },
+
+                lineHeight : {
+                    label : "行高",
+                    ui : "spinner",
+                    min : 0,
+                    value : this.properties.lineHeight
                 }
             }
         },
@@ -127,7 +136,17 @@ define(function(require){
                     'text-align' : horzontalAlign,
                     'vertical-align' : verticleAlign
                 })
-            })
+            });
+
+            //Line height
+            ko.computed(function(){
+                var lineHeight = self.properties.lineHeight();
+                if(lineHeight){
+                    $text.css({
+                        'line-height' : lineHeight + 'px'
+                    })
+                }
+            });
 
             ko.computed(function(){
                 var height = self.properties.height();

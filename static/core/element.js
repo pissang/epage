@@ -378,7 +378,7 @@ define(function(require){
             this.$wrapper.width(width);
             this.$wrapper.height(height);
         },
-
+        
         rasterize : function(){},
 
         export : function(){

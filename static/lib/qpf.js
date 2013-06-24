@@ -879,8 +879,13 @@ return {    // Public properties
     this.id.subscribe(function(newValue){
         this.$el.attr("id", newValue);
     }, this);
+    var prevClass = this.class();
     this.class.subscribe(function(newValue){
-        this.$el.addClass( newValue );
+        if(prevClass){
+            this.$el.removeClass(prevClass);
+        }
+        this.$el.addClass(newValue);
+        prevClass = newValue;
     }, this);
     this.visible.subscribe(function(newValue){
         newValue ? this.$el.show() : this.$el.hide();
@@ -932,7 +937,7 @@ return {    // Public properties
     // Developers can use on method to subscribe these events
     // It is used in the binding handlers to judge which parameter
     // passed in is events
-    eventsProvided : ["click", "mousedown", "mouseup", "mousemove", "resize",
+    eventsProvided : ["click", "dblclick", "mousedown", "mouseup", "mousemove", "resize",
                         "initialize", "beforerender", "render", "dispose"],
 
     // Will be called after the component first created
@@ -1583,8 +1588,6 @@ _mouseDown : function(e){
     }
 
     var self = e.data.context;
-    //disable selection
-    e.preventDefault();
 
     self._save();
 

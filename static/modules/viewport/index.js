@@ -10,6 +10,8 @@ define(function(require){
 
     var hierarchy = require("modules/hierarchy/index");
 
+    var contextMenu = require("modules/common/contextmenu");
+
     var viewport = new Module({
         name : "viewport",
         xml : xml,
@@ -57,6 +59,31 @@ define(function(require){
 
         viewport.$el.delegate('.epage-element', "click", selectElement);
 
+        contextMenu.bindTo(viewport.$el, function(target){
+            var $epageEl = $(target).parents('.epage-element');
+            if($epageEl.length){
+                var items = [{
+                    label : "删除",
+                    exec : function(){
+                        command.execute("remove", $epageEl.attr("data-epage-eid"));
+                    }
+                }, {
+                    label : "复制",
+                    exec : function(){
+                        command.execute("copy", $epageEl.attr("data-epage-eid"));
+                    }
+                }];
+            }else{
+                var items = [];
+            }
+            items.push({
+                label : "粘贴",
+                exec : function(){
+                    var els = command.execute("paste");
+                }
+            });
+            return items;
+        });
         initDragUpload();
     });
 
@@ -71,15 +98,9 @@ define(function(require){
         _viewport.addElement(element);
     });
 
-    var selectedElements = [];
-
-    var draggable = new qpf.mixin.Draggable();
-    // Update the position property manually
-    draggable.on("drag", function(){
-        _.each(selectedElements, function(element){
-            element.syncPositionManually();
-        })
-    })
+    hierarchy.on("remove", function(element){
+        _viewport.removeElement(element)
+    });
 
     hierarchy.on("select", function(elements){
         var lastElement = elements[elements.length-1];
@@ -95,6 +116,25 @@ define(function(require){
 
         selectedElements = elements;
     });
+
+    hierarchy.on("focus", function(element){
+        
+        $('#Viewport').animate({
+            scrollTop : element.$wrapper.position().top - 50 + 'px',
+            scrollLeft : element.$wrapper.position().left - 50 + 'px'
+        }, 'fast')
+    });
+
+
+    var selectedElements = [];
+
+    var draggable = new qpf.mixin.Draggable();
+    // Update the position property manually
+    draggable.on("drag", function(){
+        _.each(selectedElements, function(element){
+            element.syncPositionManually();
+        })
+    })
 
     // Drag upload
     var imageReader = new FileReader();

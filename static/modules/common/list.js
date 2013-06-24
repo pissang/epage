@@ -105,7 +105,9 @@ define(function(require){
 
         _unSelectAll : function(){
             _.each(this.children(), function(child, idx){
-                child.$el.removeClass("selected")
+                if(child){
+                    child.$el.removeClass("selected")
+                }
             }, this)
         }
 

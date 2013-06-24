@@ -29,6 +29,11 @@ define(function(require){
             if(this._$elementsContainer){
                 this._$elementsContainer.append(el.$wrapper);
             }
+
+        },
+
+        removeElement : function(el){
+            el.$wrapper.remove();
         },
 
         _scale : function(val){

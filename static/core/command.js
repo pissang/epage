@@ -10,12 +10,16 @@ define(function(){
         execute : function(command){
             var args = Array.prototype.slice.call(arguments, 1);
             if(repository[command]){
-                repository[command].execute.apply(window, args);
+                var res = repository[command].execute.apply(window, args);
 
-                undoQueue.push({
-                    command : command,
-                    args : args
-                });
+                if(command.unexecute){
+                    undoQueue.push({
+                        command : command,
+                        args : args
+                    });
+                }
+
+                return res;
             };
         },
 
