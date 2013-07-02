@@ -10,8 +10,6 @@ define(function(require){
 
     var hierarchy = require("modules/hierarchy/index");
 
-    var contextMenu = require("modules/common/contextmenu");
-
     var viewport = new Module({
         name : "viewport",
         xml : xml,
@@ -59,31 +57,6 @@ define(function(require){
 
         viewport.$el.delegate('.epage-element', "click", selectElement);
 
-        contextMenu.bindTo(viewport.$el, function(target){
-            var $epageEl = $(target).parents('.epage-element');
-            if($epageEl.length){
-                var items = [{
-                    label : "删除",
-                    exec : function(){
-                        command.execute("remove", $epageEl.attr("data-epage-eid"));
-                    }
-                }, {
-                    label : "复制",
-                    exec : function(){
-                        command.execute("copy", $epageEl.attr("data-epage-eid"));
-                    }
-                }];
-            }else{
-                var items = [];
-            }
-            items.push({
-                label : "粘贴",
-                exec : function(){
-                    var els = command.execute("paste");
-                }
-            });
-            return items;
-        });
         initDragUpload();
     });
 

@@ -50,6 +50,8 @@ define(function(require){
 
                 zIndex : ko.observable(0),
                 
+                //-------------------
+                // Background
                 background : hasBackground,
                 backgroundColor : ko.observable(0xffffff),
                 backgroundImageType : ko.observable("none"),
@@ -62,10 +64,24 @@ define(function(require){
                 }]),
                 backgroundGradientAngle : ko.observable(180),
 
+                //-------------------
+                // Border radius
                 borderTopLeftRadius : ko.observable(0),
                 borderTopRightRadius : ko.observable(0),
                 borderBottomRightRadius : ko.observable(0),
                 borderBottomLeftRadius : ko.observable(0),
+
+                //-------------------
+                // Shadow
+                hasShadow : ko.observable(false),
+                shadowOffsetX : ko.observable(0),
+                shadowOffsetY : ko.observable(0),
+                shadowBlur : ko.observable(10),
+                shadowColor : ko.observable(0),
+
+                //-------------------
+                // Border
+
 
                 link : ko.observable("")
             },
@@ -224,6 +240,52 @@ define(function(require){
                 constrainProportion : ko.observable(true)
             },
 
+            shadow : {
+                label : "阴影",
+                ui : "checkbox",
+                field : "style",
+
+                checked : props.hasShadow
+            },
+
+            shadowSize : {
+                field : "style",
+                ui : "slider",
+                min : 1,
+                max : 100,
+                precision : 0,
+                value : props.shadowBlur,
+                visible : props.hasShadow
+            },
+
+            shadowOffset : {
+                ui : "vector",
+                field : "style",
+                items : [{
+                    name : "shadowOffsetX",
+                    type : "slider",
+                    min : -100,
+                    max : 100,
+                    precision : 0,
+                    value : props.shadowOffsetX
+                }, {
+                    name : "shadowOffsetY",
+                    type : "slider",
+                    min : -100,
+                    max : 100,
+                    precision : 0,
+                    value : props.shadowOffsetY
+                }],
+                visible : props.hasShadow
+            },
+
+            shadowColor : {
+                ui : "color",
+                field : "style",
+                color : props.shadowColor,
+                visible : props.hasShadow
+            },
+
             link : {
                 label : "超链接",
                 ui : "textfield",
@@ -353,6 +415,27 @@ define(function(require){
                     }
                 }
             });
+
+            // Shadow
+            ko.computed({
+                read : function(){
+                    var props = self.properties;
+                    var shadowOffsetX = Math.floor(props.shadowOffsetX())+"px",
+                        shadowOffsetY = Math.floor(props.shadowOffsetY())+"px",
+                        shadowBlur = Math.floor(props.shadowBlur())+"px",
+                        shadowColor = Math.floor(props.shadowColor());
+
+                    if(shadowBlur && props.hasShadow()){
+                        self.$wrapper.css({
+                            'box-shadow' : [shadowOffsetX, shadowOffsetY, shadowBlur, onecolor(shadowColor).css()].join(' ')
+                        })
+                    }else{
+                        self.$wrapper.css({
+                            'box-shadow' : 'none'
+                        })
+                    }
+                }
+            })
 
             this.$wrapper.css({
                 position : "absolute"

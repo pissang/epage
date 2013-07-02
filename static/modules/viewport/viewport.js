@@ -4,6 +4,9 @@ define(function(require){
     var ko = require("knockout");
     var Meta = qpf.use("meta/meta");
 
+    var command = require("core/command");
+    var contextMenu = require("modules/common/contextmenu");
+
     var Viewport = Meta.derive(function(){
         return {
             scale : ko.observable(1.0)
@@ -19,6 +22,32 @@ define(function(require){
         initialize : function(){
             this.scale.subscribe(this._scale, this);
             this._scale(this.scale());
+
+            contextMenu.bindTo(this.$el, function(target){
+                var $epageEl = $(target).parents('.epage-element');
+                if($epageEl.length){
+                    var items = [{
+                        label : "删除",
+                        exec : function(){
+                            command.execute("remove", $epageEl.attr("data-epage-eid"));
+                        }
+                    }, {
+                        label : "复制",
+                        exec : function(){
+                            command.execute("copy", $epageEl.attr("data-epage-eid"));
+                        }
+                    }];
+                }else{
+                    var items = [];
+                }
+                items.push({
+                    label : "粘贴",
+                    exec : function(){
+                        var els = command.execute("paste");
+                    }
+                });
+                return items;
+            });
         },
 
         afterRender : function(){
@@ -29,7 +58,6 @@ define(function(require){
             if(this._$elementsContainer){
                 this._$elementsContainer.append(el.$wrapper);
             }
-
         },
 
         removeElement : function(el){
