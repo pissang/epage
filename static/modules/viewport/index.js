@@ -71,15 +71,9 @@ define(function(require){
         _viewport.addElement(element);
     });
 
-    var selectedElements = [];
-
-    var draggable = new qpf.mixin.Draggable();
-    // Update the position property manually
-    draggable.on("drag", function(){
-        _.each(selectedElements, function(element){
-            element.syncPositionManually();
-        })
-    })
+    hierarchy.on("remove", function(element){
+        _viewport.removeElement(element)
+    });
 
     hierarchy.on("select", function(elements){
         var lastElement = elements[elements.length-1];
@@ -95,6 +89,25 @@ define(function(require){
 
         selectedElements = elements;
     });
+
+    hierarchy.on("focus", function(element){
+        
+        $('#Viewport').animate({
+            scrollTop : element.$wrapper.position().top - 50 + 'px',
+            scrollLeft : element.$wrapper.position().left - 50 + 'px'
+        }, 'fast')
+    });
+
+
+    var selectedElements = [];
+
+    var draggable = new qpf.mixin.Draggable();
+    // Update the position property manually
+    draggable.on("drag", function(){
+        _.each(selectedElements, function(element){
+            element.syncPositionManually();
+        })
+    })
 
     // Drag upload
     var imageReader = new FileReader();

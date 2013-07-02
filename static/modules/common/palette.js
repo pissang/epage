@@ -9,9 +9,7 @@ define(function(require){
         left : ko.observable(300),
         top : ko.observable(100)
     });
-    popup.$el.hide().css({
-        'z-index' : 10000
-    });
+    popup.$el.hide();
     popup.title("调色器");
     popup.id("Palette");
     popup.add(palette);

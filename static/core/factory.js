@@ -31,14 +31,51 @@ define(function(require){
             return el;
         },
 
-        getElementByEID : function(eid){
+        clone : function(element){
+            var type = element.type.toLowerCase();
+
+            var properties = koMapping.toJS(element.properties);
+
+            var origID = element.__original__ ? element.__original__.properties.id() : element.properties.id();
+            properties.id = getClonedID(origID);
+
+            properties.left += 10;
+            properties.top += 10;
+
+            var res = componentFactory.create(type, properties);
+            // Save the original element of clone;
+            res.__original__ = element.__original__ || element;
+            return res;
+        },
+
+        getByEID : function(eid){
             return repository[eid];
         },
 
-        delete : function(){
+        removeByEID : function(eid){
+            delete repository[eid];
+        },
 
+        remove : function(element){
+            delete repository[element.eid];
         }
     }
+
+    var getClonedID = (function(){
+        var clonedCount = {};
+
+        return function(id){
+            if( ! clonedCount[id]){
+                clonedCount[id] = 0;
+            }
+            var name = id + "_复制";
+            if(clonedCount[id]){
+                name += clonedCount[id];
+            }
+            clonedCount[id]++;
+            return name;
+        }
+    })()
 
     return componentFactory;
 })

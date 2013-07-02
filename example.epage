@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "date": "2013-7-2"
+  },
   "viewport": {
     "width": 1280,
     "height": 1900
@@ -32,6 +35,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": true,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "src": "url(image/1#src)"
       }
@@ -64,6 +72,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "src": "url(image/2#src)"
       }
@@ -96,13 +109,19 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "专题",
         "fontFamily": "黑体, SimHei",
         "fontSize": 24,
         "color": 7302252,
         "horzontalAlign": "center",
-        "verticleAlign": "middle"
+        "verticleAlign": "middle",
+        "lineHeight": 0
       }
     },
     {
@@ -112,8 +131,8 @@
         "id": "TEXT_1",
         "width": 600,
         "height": 100,
-        "left": 63,
-        "top": 497,
+        "left": 64,
+        "top": 478,
         "zIndex": 0,
         "background": false,
         "backgroundColor": 16777215,
@@ -133,13 +152,19 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "1.推广计划引入移动出价比例，畅游移动营销新蓝海！",
         "fontFamily": "黑体, SimHei",
         "fontSize": 20,
         "color": 7829367,
         "horzontalAlign": "left",
-        "verticleAlign": "middle"
+        "verticleAlign": "middle",
+        "lineHeight": 0
       }
     },
     {
@@ -170,6 +195,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": true,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 9.483642578125,
+        "shadowColor": 10066329,
         "link": "",
         "src": "url(image/5#src)"
       }
@@ -202,13 +232,19 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "2.关键词、创意支持移动URL批量编辑，高效便捷无出其右！",
         "fontFamily": "黑体, SimHei",
         "fontSize": 20,
         "color": 8224125,
         "horzontalAlign": "left",
-        "verticleAlign": "middle"
+        "verticleAlign": "middle",
+        "lineHeight": 0
       }
     },
     {
@@ -239,13 +275,19 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "移动时代来临，不想对海量关键词设置不同的出价？移动出价比例在计划层级设立了！随时按比例批量调整关键词的移动出价，移动推广尽在掌握！",
         "fontFamily": "宋体,SimSun",
-        "fontSize": 20,
+        "fontSize": 18,
         "color": 10132122,
         "horzontalAlign": "left",
-        "verticleAlign": "middle"
+        "verticleAlign": "middle",
+        "lineHeight": 40
       }
     },
     {
@@ -255,8 +297,8 @@
         "id": "IMAGE_3",
         "width": 479,
         "height": 286,
-        "left": 57,
-        "top": 1011,
+        "left": 63,
+        "top": 1014,
         "zIndex": 0,
         "background": false,
         "backgroundColor": 16777215,
@@ -276,6 +318,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": true,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 11.030517578125,
+        "shadowColor": 8618883,
         "link": "",
         "src": "url(image/8#src)"
       }
@@ -308,13 +355,19 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "全新移动站点，URL填写费时费力怎么办？客户端强力支持创意、关键词的移动URL批量管理，快速修改，并提供批量添加/更新、高级编辑工具的全套支持，让您的移动推广管理便捷高效！",
         "fontFamily": "宋体,SimSun",
-        "fontSize": 20,
+        "fontSize": 18,
         "color": 10461087,
         "horzontalAlign": "left",
-        "verticleAlign": "middle"
+        "verticleAlign": "middle",
+        "lineHeight": 40
       }
     },
     {
@@ -345,13 +398,19 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "3.智能提词包新鲜出炉，提词轻松便捷，效果更好！",
         "fontFamily": "黑体, SimHei",
         "fontSize": 20,
         "color": 9342606,
         "horzontalAlign": "left",
-        "verticleAlign": "middle"
+        "verticleAlign": "middle",
+        "lineHeight": 0
       }
     },
     {
@@ -362,7 +421,7 @@
         "width": 400,
         "height": 100,
         "left": 91,
-        "top": 1457,
+        "top": 1471,
         "zIndex": 0,
         "background": false,
         "backgroundColor": 16777215,
@@ -382,13 +441,19 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "关键词数量少，质量不高导致推广效果差怎么办？智能提词包火热上线，提供热搜词、潜力词、质优词、行业词等各类好词，轻松提词，效果触手可及！ 除此之外，本次升级支持移动新状 态、筛选模版、导入导出、复制粘贴等一系列完备功能，成就您在移动营销时代的必备利器！",
         "fontFamily": "宋体,SimSun",
-        "fontSize": 20,
-        "color": 8618883,
+        "fontSize": 18,
+        "color": 10461087,
         "horzontalAlign": "left",
-        "verticleAlign": "top"
+        "verticleAlign": "top",
+        "lineHeight": 40
       }
     },
     {
@@ -419,6 +484,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": true,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 12.577392578125,
+        "shadowColor": 8947848,
         "link": "",
         "src": "url(image/12#src)"
       }
@@ -430,8 +500,8 @@
         "id": "ELEMENT_0",
         "width": 1200,
         "height": 400,
-        "left": 45,
-        "top": 516,
+        "left": 33,
+        "top": 503,
         "zIndex": -1,
         "background": true,
         "backgroundColor": 16777215,
@@ -447,10 +517,15 @@
           }
         ],
         "backgroundGradientAngle": 180,
-        "borderTopLeftRadius": 0,
-        "borderTopRightRadius": 0,
-        "borderBottomRightRadius": 0,
-        "borderBottomLeftRadius": 0,
+        "borderTopLeftRadius": 15.11627906976744,
+        "borderTopRightRadius": 15.11627906976744,
+        "borderBottomRightRadius": 15.11627906976744,
+        "borderBottomLeftRadius": 15.11627906976744,
+        "hasShadow": true,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 3.578125,
+        "shadowColor": 8289918,
         "link": ""
       }
     },
@@ -482,6 +557,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": ""
       }
     },
@@ -513,6 +593,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": ""
       }
     },
@@ -544,6 +629,11 @@
         "borderTopRightRadius": 0,
         "borderBottomRightRadius": 0,
         "borderBottomLeftRadius": 0,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": ""
       }
     },
@@ -575,13 +665,91 @@
         "borderTopRightRadius": 17.441860465116278,
         "borderBottomRightRadius": 17.441860465116278,
         "borderBottomLeftRadius": 17.441860465116278,
+        "hasShadow": false,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 10,
+        "shadowColor": 0,
         "link": "",
         "text": "官方网站",
         "fontFamily": "黑体, SimHei",
         "fontSize": 16,
         "color": 16777215,
         "horzontalAlign": "center",
-        "verticleAlign": "middle"
+        "verticleAlign": "middle",
+        "lineHeight": 0
+      }
+    },
+    {
+      "eid": 21,
+      "type": "ELEMENT",
+      "properties": {
+        "id": "ELEMENT_0_复制2",
+        "width": 1200,
+        "height": 400,
+        "left": 32,
+        "top": 1363,
+        "zIndex": -1,
+        "background": true,
+        "backgroundColor": 16777215,
+        "backgroundImageType": "gradient",
+        "backgroundGradientStops": [
+          {
+            "percent": 0,
+            "color": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "percent": 1,
+            "color": "rgba(236,236,236,1)"
+          }
+        ],
+        "backgroundGradientAngle": 180,
+        "borderTopLeftRadius": 15.11627906976744,
+        "borderTopRightRadius": 15.11627906976744,
+        "borderBottomRightRadius": 15.11627906976744,
+        "borderBottomLeftRadius": 15.11627906976744,
+        "hasShadow": true,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 3.578125,
+        "shadowColor": 8289918,
+        "link": ""
+      }
+    },
+    {
+      "eid": 22,
+      "type": "ELEMENT",
+      "properties": {
+        "id": "ELEMENT_0_复制3",
+        "width": 1200,
+        "height": 400,
+        "left": 33,
+        "top": 924,
+        "zIndex": -1,
+        "background": true,
+        "backgroundColor": 16777215,
+        "backgroundImageType": "gradient",
+        "backgroundGradientStops": [
+          {
+            "percent": 0,
+            "color": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "percent": 1,
+            "color": "rgba(236,236,236,1)"
+          }
+        ],
+        "backgroundGradientAngle": 180,
+        "borderTopLeftRadius": 15.11627906976744,
+        "borderTopRightRadius": 15.11627906976744,
+        "borderBottomRightRadius": 15.11627906976744,
+        "borderBottomLeftRadius": 15.11627906976744,
+        "hasShadow": true,
+        "shadowOffsetX": 0,
+        "shadowOffsetY": 0,
+        "shadowBlur": 3.578125,
+        "shadowColor": 8289918,
+        "link": ""
       }
     }
   ],

@@ -9,6 +9,7 @@ define(function(require){
     var _ = require("_");
 
     var propertyModule = require("../property/index");
+    var contextMenu = require("modules/common/contextmenu");
 
     var ElementView = require("./element");
 
@@ -18,8 +19,8 @@ define(function(require){
 
         // Elements data source 
         // {
-        //     id : [ko.observable()],
-        //     target : [Element] 
+        //     id : ko.observable(),
+        //     target : Element
         // }
         elementsList : ko.observableArray([]),
 
@@ -37,7 +38,7 @@ define(function(require){
         selectElementsByEID : function(eidList){
             var elements = [];
             _.each(eidList, function(eid){
-                var el = componentFactory.getElementByEID(eid);
+                var el = componentFactory.getByEID(eid);
                 if(el){
                     elements.push(el);
                 }
@@ -65,8 +66,48 @@ define(function(require){
             });
         },
         deferEvaluation : true
-    })
+    });
 
+    hierarchy.on("start", function(){
+        hierarchy.mainComponent.$el.delegate(".qpf-ui-element", "dblclick", function(e){
+            hierarchy.trigger("focus", $(this).qpf("get")[0].target());
+        });
+
+        contextMenu.bindTo(hierarchy.mainComponent.$el, function(target){
+            var $uiEl = $(target).parents(".qpf-ui-element");
+            if($uiEl.length){
+                return [{
+                    label : "删除",
+                    exec : function(){
+                        command.execute("remove", $uiEl.qpf("get")[0].target());
+                    }
+                }, {
+                    label : "复制",
+                    exec : function(){
+                        command.execute("copy", $uiEl.qpf("get")[0].target());
+                    }
+                }]
+            }else{
+                return [{
+                    label : "粘贴",
+                    exec : function(){
+                        var els = command.execute("paste");
+                    }
+                }]
+            }
+        });
+    });
+
+    ko.computed(function(){
+        var selectedElements = hierarchy.selectedElements();
+        element = selectedElements[selectedElements.length-1];
+        if(element){
+            propertyModule.showProperties(element.uiConfig);
+        }
+        hierarchy.trigger("select", selectedElements);
+    });
+
+    // Register commands
     command.register("create", {
         execute : function(name, properties){
             var element = componentFactory.create(name, properties);
@@ -87,23 +128,71 @@ define(function(require){
     });
 
     command.register("remove", {
-        execute : function(){
+        execute : function(element){
+            if( typeof(element) === "string"){
+                element = componentFactory.getByEID(element);
+            }
+            componentFactory.remove(element);
 
+            hierarchy.elementsList(_.filter(hierarchy.elementsList(), function(data){
+                return data.target !== element;
+            }));
+            hierarchy.selectedElements.remove(element);
+            propertyModule.showProperties([]);
+
+            hierarchy.trigger("remove", element);
         },
         unexecute : function(){
 
         }
     });
 
-    ko.computed(function(){
-        var selectedElements = hierarchy.selectedElements();
-        var lastSelectedElement = selectedElements[selectedElements.length-1];
-        if(lastSelectedElement){
-            propertyModule.showProperties(lastSelectedElement.uiConfig);
+    command.register("removeselected", {
+        execute : function(){
+
+        },
+        unexecute : function(){
+
         }
-        hierarchy.trigger("select", selectedElements);
+    })
 
 
+    var clipboard = [];
+    command.register("copy", {
+        execute : function(element){
+            if(typeof(element) === "string"){
+                element = componentFactory.getByEID(element);
+            }
+            clipboard = [element];
+        }
+    });
+
+    command.register("copyselected", {
+        execute : function(){
+
+        }
+    })
+
+    command.register("paste", {
+        execute : function(){
+            var res = [];
+            _.each(clipboard, function(item){
+                var el = componentFactory.clone(item);
+                hierarchy.elementsList.push({
+                    target : el,
+                    id : el.properties.id
+                });
+                hierarchy.trigger("create", el);
+
+                res.push(el);
+            });
+            hierarchy.selectedElements(res);
+
+            return res;
+        },
+        unexecute : function(){
+
+        }
     });
 
     

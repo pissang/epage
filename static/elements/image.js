@@ -15,7 +15,7 @@ define(function(require){
             var img = document.createElement("img");
             var self = this;
 
-            var updateImageSize = _.throttle(function(width, height){
+            var updateImageSize = _.debounce(function(width, height){
                 img.width = width;
                 img.height = height;
             }, 1);
@@ -32,6 +32,7 @@ define(function(require){
                 img.onload = function(){
                     var width = img.width,
                         height = img.height;
+
                     self.properties.width(width);
                     self.properties.height(height);
                     img.onload = null;

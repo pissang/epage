@@ -50,7 +50,11 @@ define(function(require){
             viewportModule.viewportHeight(json.viewport.height);
         },
         export : function(){
+            var d = new Date();
             var result = {
+                meta : {
+                    date : d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate()
+                },
                 viewport : {
                     width : viewportModule.viewportWidth(),
                     height : viewportModule.viewportHeight()

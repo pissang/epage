@@ -35,6 +35,10 @@ body{
 #EPAGE{
     font-family: "黑体";
     
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select : none;
+
     .qpf-ui-panel{
         border-radius: 0px;
 
@@ -126,6 +130,15 @@ body{
                 background-image: url(images/slider-control-up.png);
             }
         }
+    }
+
+    .qpf-mask{
+        position: absolute;
+        z-index: 9999;
+        left:0px;
+        top:0px;
+        right:0px;
+        bottom:0px;
     }
 }
 
@@ -362,6 +375,12 @@ body{
             margin-right: 10px;
         }
     }
+
+    .qpf-ui-spinner{
+        input{
+            width:100px;
+        }
+    }
 }
 
 #Hierarchy{
@@ -389,9 +408,36 @@ body{
 
 #Palette{
     box-shadow: 0px 0px 10px black;
+    z-index: 10000;
 
     .qpf-panel-body{
         padding:10px;
+    }
+}
+
+.qpf-context-menu{
+    position: absolute;
+    z-index: 10001;
+
+    padding:5px 0px;
+
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px #3A3A3A;
+    min-width:100px;
+
+    .qpf-ui-context-menu-item{
+        padding:5px 10px;
+        cursor: pointer;
+
+        &:hover{
+            background-color: #356cf7;
+            color:white;
+        }
+    }
+
+    &:focus{
+        outline: none;
     }
 }
 

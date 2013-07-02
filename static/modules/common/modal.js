@@ -13,8 +13,8 @@ define(function(require){
                 class : "qpf-modal"
             }
         }),
-        body = new Container,
-        buttons = new Inline,
+        body = new Container(),
+        buttons = new Inline(),
         applyButton = new Button({
             attributes : {
                 text : "确 定"
