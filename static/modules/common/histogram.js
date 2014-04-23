@@ -5,7 +5,7 @@ define(function(require){
     var emage = require("emage");
     var ko = require("knockout");
     var qtek2d = emage.qtek["2d"];
-    var Meta = qpf.use("meta/meta");
+    var Meta = qpf.use("meta/Meta");
 
     var Histogram = Meta.derive(function(){
 

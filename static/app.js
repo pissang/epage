@@ -6,11 +6,11 @@ define(function(require){
     var appXML = require("text!modules/app.xml");
     var router = require("modules/router");
     var controllerConfig = require("./controllerConfig");
-    var Event = qpf.use("core/mixin/event");
+    var notifier = qpf.use("core/mixin/notifier");
 
     function start(){
         var ko = require("knockout");
-        var XMLParser = qpf.use("core/xmlparser");
+        var XMLParser = qpf.use("core/XMLParser");
 
         var dom = XMLParser.parse(appXML);
 
@@ -24,7 +24,7 @@ define(function(require){
     var app = {
         start : start
     }
-    _.extend(app, Event);
+    _.extend(app, notifier);
 
     return app;
 })

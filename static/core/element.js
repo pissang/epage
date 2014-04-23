@@ -9,7 +9,7 @@ define(function(require){
 
     var command = require("./command");
 
-    var Draggable = qpf.mixin.Draggable;
+    var Draggable = qpf.helper.Draggable;
 
     var Element = qpf.core.Clazz.derive(function(){
         

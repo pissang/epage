@@ -101,7 +101,7 @@ define(function(require){
 
     var selectedElements = [];
 
-    var draggable = new qpf.mixin.Draggable();
+    var draggable = new qpf.helper.Draggable();
     // Update the position property manually
     draggable.on("drag", function(){
         _.each(selectedElements, function(element){

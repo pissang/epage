@@ -7,15 +7,15 @@
 define(function(require){
 
     var qpf = require("qpf");
-    var Base = qpf.use("base");
+    var Base = qpf.use("Base");
     var ko = require("knockout");
-    var XMLParser = qpf.use("core/xmlparser");
-    var Derive = qpf.use("core/mixin/derive");
-    var Event = qpf.use("core/mixin/event");
+    var XMLParser = qpf.use("core/XMLParser");
+    var derive = qpf.use("core/mixin/derive");
+    var notifier = qpf.use("core/mixin/notifier");
 
     var clazz = new Function();
-    _.extend(clazz, Derive);
-    _.extend(clazz.prototype, Event);
+    _.extend(clazz, derive);
+    _.extend(clazz.prototype, notifier);
 
     var Module = clazz.derive(function(){
         return {

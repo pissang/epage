@@ -2,7 +2,7 @@ define(function(require){
 
     var qpf = require("qpf");
     var listItem = require("./listitem");
-    var Container = qpf.use("container/container");
+    var Container = qpf.use("container/Container");
     var ko = require("knockout");
 
     var List = Container.derive(function(){

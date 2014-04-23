@@ -1,8 +1,8 @@
 define(function(require){
 
     var qpf = require("qpf");
-    var Button = qpf.use("meta/button");
-    var Meta = qpf.use("meta/meta");
+    var Button = qpf.use("meta/Button");
+    var Meta = qpf.use("meta/Meta");
     var ko = require("knockout");
 
     var IconButton = Button.derive(function(){

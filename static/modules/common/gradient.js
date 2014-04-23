@@ -78,7 +78,7 @@ define(function(require){
         _onAddStop : function(element, stop){
             var self = this;
             
-            var draggable = new qpf.mixin.Draggable({
+            var draggable = new qpf.helper.Draggable({
                 axis : 'x',
                 container : this.$el.find(".qpf-gradient-stops")
             });
